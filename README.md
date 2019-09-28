@@ -37,7 +37,7 @@ Python 3.7.3
 ### On local
 
 ```bash
-nameko run app.api
+nameko run --config config.yaml app.api
 ```
 
 ### On docker

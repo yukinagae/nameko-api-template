@@ -1,0 +1,11 @@
+version: '2'
+services:
+  app:
+    container_name: nameko-api-template
+    # env_file: .env
+    build:
+      context: .
+    volumes:
+      - ./:/api
+    ports:
+      - 8080:8080

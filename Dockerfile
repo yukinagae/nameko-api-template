@@ -18,6 +18,6 @@ ADD . .
 # see: https://qiita.com/sabaku20XX/items/8bc6e8f999e8009d76fd
 RUN pipenv install --system
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD nameko run --config config.yaml app.api

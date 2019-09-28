@@ -7,6 +7,10 @@ verify_ssl = true
 
 [packages]
 nameko = "*"
+SQLAlchemy = "*"
+pymysql = "*"
+cryptography = "*"
+# nameko-sqlalchemy = "*"
 nameko-api-template = {editable = true,path = "."}
 
 [requires]

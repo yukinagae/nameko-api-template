@@ -1,5 +1,6 @@
 import json
 from nameko.web.handlers import http
+from sqlalchemy import create_engine
 
 
 # TODO: dummy data
@@ -9,18 +10,24 @@ TODOS = {
     'todo3': {'task': 'profit!'},
 }
 
+# TODO: or fetch from database
+engine = create_engine('mysql+pymysql://root:password@127.0.0.1:3306/todo')
+
 
 class HttpService:
     name = "http_service"
 
     @http('GET', '/todos/<string:todo_id>')
     def get_todo(self, request, todo_id):
-        if todo_id in TODOS:
-            return json.dumps(TODOS[todo_id])
-        else:
-            return json.dumps({'error': 'not found'})
+        with engine.connect() as con:
+            result = con.execute('SELECT * FROM todo WHERE id = :id', {'id': todo_id})
+            return json.dumps({'result': [dict(row) for row in result]})
+        return json.dumps({'error': 'not found'})
 
 
     @http('GET', '/todos')
     def get_todos(self, request):
-        return json.dumps(TODOS)
+        with engine.connect() as con:
+            result = con.execute('SELECT * FROM todo')
+            return json.dumps({'result': [dict(row) for row in result]})
+        return json.dumps({'error': 'not found'})
